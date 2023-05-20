@@ -1,8 +1,7 @@
 <template>
-    <h2 class="laravel-vite-h2">Laravel vite</h2>
+    <Profile />
 </template>
-<style>
-    /* .laravel-vite-h2 {
-        background-color: #cd10e2;
-    } */
-</style>
+
+<script setup>
+import Profile from './pages/Profile.vue'
+</script>

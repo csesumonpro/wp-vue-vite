@@ -20,6 +20,7 @@ function laravel_vite_page()
 function laravel_vite_scripts()
 {
     wp_enqueue_script('laravel-vite', "http://127.0.0.1:1212/resources/js/app.js", [], false, true);
+    wp_enqueue_style('laravel-vite', "http://127.0.0.1:1212/resources/scss/app.scss", [], false, 'all');
 }
 
 add_filter('script_loader_tag', 'add_module_to_script', 10, 3);
