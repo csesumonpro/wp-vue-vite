@@ -19,14 +19,26 @@ export default defineConfig({
       emptyOutDir: true, // delete the contents of the output directory before each build
       rollupOptions: {
         input: [
-          'resources/js/app.js',
-          'resources/scss/app.scss',
+          'resources/js/app.js'
         ],
         output: {
-          entryFileNames: `[name].js`,
-          chunkFileNames: `[name].js`,
-          assetFileNames: `[name].[ext]`
-        }
+          chunkFileNames: 'js/[name].js',
+          entryFileNames: 'js/[name].js',
+          
+          assetFileNames: ({name}) => {
+            if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')){
+                return 'images/[name]-[hash][extname]';
+            }
+            
+            if (/\.css$/.test(name ?? '')) {
+                return 'css/[name][extname]';   
+            }
+   
+            // default value
+            // ref: https://rollupjs.org/guide/en/#outputassetfilenames
+            return '[name]-[hash][extname]';
+          },
+        },
       }
     },
     server: {

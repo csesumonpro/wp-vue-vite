@@ -1,8 +1,8 @@
 {
+  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "dev": "node replace.js && vite",
+    "prod": "vite build && node replace.js"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
