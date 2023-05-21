@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import liveReload from 'vite-plugin-live-reload';
 
 export default defineConfig({
     plugins: [
       vue(),
+      liveReload(`${__dirname}/**/*\.php`),
       viteStaticCopy({
         targets: [
           { src: './resources/libs', dest: '.' },

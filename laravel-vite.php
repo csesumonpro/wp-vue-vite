@@ -14,6 +14,7 @@ function laravel_vite_menu()
 function laravel_vite_page()
 {
     laravel_vite_scripts();
+    echo "Php file live update Test";
     echo '<div id="laravel-vite_app"></div>';
 }
 
