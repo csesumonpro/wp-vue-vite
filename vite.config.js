@@ -1,8 +1,32 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      viteStaticCopy({
+        targets: [
+          { src: './resources/libs', dest: '.' },
+        ],
+      }),
+    ],
+    build: {
+      outDir: 'assets',
+      assetsDir: '.', // All are from rollupOptions
+      emptyOutDir: true, // delete the contents of the output directory before each build
+      rollupOptions: {
+        input: [
+          'resources/js/app.js',
+          'resources/scss/app.scss',
+        ],
+        output: {
+          entryFileNames: `[name].js`,
+          chunkFileNames: `[name].js`,
+          assetFileNames: `[name].[ext]`
+        }
+      }
+    },
     server: {
         port: 1212,
         strictPort: true,
