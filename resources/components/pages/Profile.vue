@@ -1,5 +1,5 @@
 <template>
     <div class="profile">
-        <h1 class="title">Profile title</h1>
+        <h1 class="title">Profile Page ==</h1>
     </div>
 </template>

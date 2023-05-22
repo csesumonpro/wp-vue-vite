@@ -19,7 +19,8 @@ export default defineConfig({
       emptyOutDir: true, // delete the contents of the output directory before each build
       rollupOptions: {
         input: [
-          'resources/js/app.js'
+          'resources/js/app.js',
+          'resources/scss/app.scss',
         ],
         output: {
           chunkFileNames: 'js/[name].js',

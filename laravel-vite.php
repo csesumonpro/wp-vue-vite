@@ -23,10 +23,11 @@ function laravel_vite_page()
 function laravel_vite_scripts()
 {
     $plugin_url = LARAVEL_VITE;
-    $static_plugin_url = LARAVEL_VITE;
+    $static_url = LARAVEL_VITE;
 
-    wp_enqueue_script('laravel-vite', "http://127.0.0.1:1212/resources/js/app.js", [], false, true);
-    wp_enqueue_style('php-file', "$static_plugin_url/assets/libs/css/one.css", [], false, 'all');
+    wp_enqueue_script('laravel-vite', "$plugin_url/assets/js/app.js", [], false, true);
+    wp_enqueue_style('laravel-vite', "$plugin_url/assets/css/app.css", [], false, 'all');
+    wp_enqueue_style('php-file', "$static_url/assets/libs/css/one.css", [], false, 'all');
 }
 
 add_filter('script_loader_tag', 'add_module_to_script', 10, 3);

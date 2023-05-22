@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const npmEvent = process.env.npm_lifecycle_event;
-const srcDir = "http://127.0.0.1:1212/resources";
+const siteURL = "http://127.0.0.1:1212";
+const resourceDir = siteURL+"/resources";
 const assetsDir = "$plugin_url/assets";
 
 // Get all php file from nested directories and subdirectories with full path
@@ -18,27 +19,47 @@ const phpFiles = fs.readdirSync(__dirname, { withFileTypes: true })
     }, [])
     .filter(file => file.endsWith('.php'));
 
-// loop through the php files
+// Loop through the php files
 phpFiles.forEach(file => {
     const filePath = path.join(__dirname, file);
-    // read the file
+    // Read the file
     const fileContent = fs.readFileSync
     (
         filePath,
         'utf8'
     );
 
-    // replace all the matches string from the file
+    // Replace all the matches string from the file
     let newFileContent = '';
 
     if (npmEvent === 'prod') {
-        newFileContent = fileContent.replace(new RegExp(srcDir, 'g'), assetsDir);
 
+        let content = fileContent.replace(/scss/g, function(match) {
+            if (fileContent.includes(resourceDir)) {
+              return 'css';
+            } else {
+              return match;
+            }
+        });
+
+       newFileContent = content.replace(new RegExp(resourceDir, 'g'), assetsDir);
+       
     } else if (npmEvent === 'dev') {
-        RegExp.quote = function(str) {
-            return (str+'').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
-        };
-        newFileContent = fileContent.replace(new RegExp(RegExp.quote(assetsDir), 'g'), srcDir);
+
+        // Replace all the plugin_url/assets to resourceDir
+        let content = fileContent.replace(/\$plugin_url\/assets/g, resourceDir);
+
+        // Replace all the .css to .scss if the URL strat with siteURL
+        content = content.replace(/http:\/\/127\.0\.0\.1:1212.*?\.css/g, (match) => {
+            return match.replace('.css', '.scss');
+        });
+
+        // Replace all the css to scss if the URL strat with siteURL
+        content = content.replace(/http:\/\/127\.0\.0\.1:1212.*?\/css/g, (match) => {
+            return match.replace('css', 'scss');
+        });
+    
+        newFileContent = content;
     }
 
     // write the new file
